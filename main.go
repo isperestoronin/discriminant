@@ -53,6 +53,7 @@ func main() {
 		}
 
 		fmt.Println(" ")
+		fmt.Println(" ")
 		fmt.Print("Хотите продолжить? Введите 'да' для продолжения или 'нет' для выхода: ")
 		fmt.Scan(&close)
 
