@@ -1,3 +1,2 @@
 ## Hello everyone!
-### This is my first pet-project!
-### Don't judge strictly. 🤠
+### This is my first pet-project — don't judge strictly. 🤠
