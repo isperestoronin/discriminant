@@ -1,2 +1,2 @@
 ## Hello everyone!
-### This is my first pet-project — don't judge strictly. 🤠
+### This is my first golang pet-project — don't judge strictly. 🤠
