@@ -1,71 +1,74 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"math"
+	"os"
+	"strconv"
+	"strings"
 )
 
-func main() {
-	fmt.Println("Приветствую! Я — программа, помогающая решить приведённые квадратные уравнения вида: ax^2+bx+c=0")
-	fmt.Println(" ")
+func readFloat(prompt string) float64 {
+	reader := bufio.NewReader(os.Stdin)
+
 	for {
-		var a float64
-		var b float64
-		var c float64
-		var close string
+		fmt.Print(prompt)
+		input, _ := reader.ReadString('\n')
+		input = strings.TrimSpace(input)
 
-		fmt.Print("Введи значение a: ")
-		fmt.Scan(&a)
-
-		if a == 0 {
-			fmt.Println("Значение a не может быть равно нулю, это уже не квадратное уравнение! Попробуйте ещё раз:")
+		if strings.Contains(input, ",") {
+			fmt.Println("Ошибка: используйте точку для разделения десятичной части. Попробуйте ещё раз.")
 			continue
 		}
 
-		fmt.Print("Введи значение b: ")
-		fmt.Scan(&b)
+		value, err := strconv.ParseFloat(input, 64)
+		if err != nil {
+			fmt.Println("Некорректный ввод. Попробуйте ещё раз.")
+			continue
+		}
+		return value
+	}
+}
 
-		fmt.Print("Введи значение c: ")
-		fmt.Scan(&c)
+func main() {
+	fmt.Println("Приветствую! Я — программа, решающая квадратные уравнения ax^2 + bx + c = 0")
+	fmt.Println()
 
-		fmt.Println(" ")
+	for {
+		a := readFloat("Введи значение a: ")
+		if a == 0 {
+			fmt.Println("Значение a не может быть равно нулю, это уже не квадратное уравнение!")
+			continue
+		}
+
+		b := readFloat("Введи значение b: ")
+		c := readFloat("Введи значение c: ")
+
+		fmt.Println()
 		D := (b * b) - 4*(a*c)
-		fmt.Println("Таким образом, дискриминант равен:", D)
+		fmt.Println("Дискриминант равен:", D)
 
 		if D > 0 {
-
-			var x1 float64
-			var x2 float64
-
-			x1 = (-b + math.Sqrt(D)) / (2 * a)
-			x2 = (-b - math.Sqrt(D)) / (2 * a)
-
-			fmt.Println("Ваше уравнение имеет два корня:", x1, "и", x2)
+			x1 := (-b + math.Sqrt(D)) / (2 * a)
+			x2 := (-b - math.Sqrt(D)) / (2 * a)
+			fmt.Println("Уравнение имеет два корня:", x1, "и", x2)
+		} else if D == 0 {
+			x := -b / (2 * a)
+			fmt.Println("Уравнение имеет один корень:", x)
+		} else {
+			fmt.Println("Уравнение не имеет действительных корней")
 		}
 
-		if D == 0 {
-
-			var x float64
-
-			x = (-b + math.Sqrt(D)) / (2 * a)
-
-			fmt.Println("Ваше уравнение имеет один корень:", x)
-		}
-
-		if D < 0 {
-
-			fmt.Println("Ваше уравнение не имеет корней, так как дискриминант меньше нуля")
-		}
-
-		fmt.Println(" ")
-		fmt.Print("Хотите продолжить? Введите 'да' для продолжения или 'нет' для выхода: ")
+		fmt.Println()
+		fmt.Print("Хотите продолжить? Введите 'да' или 'нет': ")
+		var close string
 		fmt.Scan(&close)
 
-		if close != "да" && close != "Да" {
+		if strings.ToLower(close) != "да" {
 			fmt.Println("До новых встреч!")
 			break
 		}
-
 		fmt.Println()
 	}
 }
